@@ -1,5 +1,15 @@
 import React, { useState, useEffect } from 'react'
-import { Space, Mask, SpinLoading, Divider, Image, Modal } from 'antd-mobile'
+import {
+  Space,
+  Divider,
+  Image,
+
+
+  Mask,
+  SpinLoading,
+
+  Modal
+} from 'antd'
 import { useNavigate } from 'umi';
 import { extend } from "umi-request";
 import './index.less';
