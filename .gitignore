@@ -5,12 +5,8 @@
 /src/.umi
 /src/.umi-production
 /src/.umi-test
-/.umi
-/.umi-production
-/.umi-test
 /dist
-/dist_electron
-/.mfsu
+/study.bahasaindo.cn
 .swc
 
 # Log files

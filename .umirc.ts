@@ -1,53 +1,40 @@
-import { defineConfig } from '@umijs/max';
+import { defineConfig } from "umi";
+const baseUrl =  "http://study.bahasaindo.cn";
 
-const isDevelopment = process.env.NODE_ENV === "development";
-console.log(isDevelopment);
-
+//配置文件，包含 Umi 所有非运行时配置
 export default defineConfig({
-  antd: {
-    dark: false,
+  title: "东东印尼语",
+  npmClient: 'pnpm',
+  outputPath: 'dist',
+  history: { type: 'hash' },
+  hash: true,  //让 build 之后的产物包含 hash 后缀, 避免浏览器加载缓存
+  mock: false, //关闭 Mock 功能
+  clientLoader: {}, //路由数据预加载
+  theme: {
+    '@primary-color': '#1DA57A'
   },
-  access: {},
-  model: {},
-  initialState: {},
-  request: {
-    dataField: '',
-  },
-  layout: {
-    title: '东东印尼语',
-  },
-  routes: [
-    {
-      path: '/',
-      redirect: '/login',
-    },
-    {
-      name: '登录',
-      path: '/login',
-      component: './Login',
-      menuRender: false,
-    },
-    {
-      name: '课程',
-      path: '/course',
-      component: './Course',
-      menuRender: false,
-    },
-  ],
-  npmClient: 'yarn',
   proxy: {
     //备用环境
-    '/business': {
-      target: 'http://www.bahasaindo.net/business/',
-      changeOrigin: true,
-      pathRewrite: { '^/business': '' },
-    },
-    '/file': {
-      target: 'http://www.bahasaindo.net/file/',
-      changeOrigin: true,
-      pathRewrite: { '^/file': '' },
+    '/prod-api': {
+      'target': baseUrl + '/prod-api/',
+      'changeOrigin': true,
+      'pathRewrite': { '^/prod-api' : '' },
     },
   },
+  routes: [
+    { path: "/", component: "home" },
+    { path: "/home", component: "home" },
+    // { path: "/login", component: "login", name: "Selamat datang 欢迎" },
+    // { path: "/courseCatalog", component: "courseCatalog", name: "课程分类" },
+    // { path: "/courseList", component: "courseList", name: "课程目录" },
+    // { path: "/confidentiality", component: "confidentiality", name: "保密协议" },
+    // { path: "/courseDetail", component: "courseDetail", name: "课程查看" },
+    // { path: "/setting", component: "setting", name: "设置" },
+    // { path: "/doExercises", component: "doExercises", name: "习题练习" },
+    // { path: "/aboutUs", component: "aboutUs", name: "关于我们" },
+    // { path: "/peopleNearby", component: "peopleNearby", name: "附近的人" },
+  ],
+  alias: {},
   links: [
     {
       rel: "stylesheet",
@@ -59,34 +46,6 @@ export default defineConfig({
     'https://g.alicdn.com/apsara-media-box/imp-web-player/2.16.3/aliplayer-h5-min.js',
     { src: '/lib/aliplayercomponents-1.0.9.min.js' },
   ],
-  plugins: ["umi-plugin-electron-builder"],
-  electronBuilder: {
-    mainSrc: 'src/main', //默认主进程目录
-    preloadSrc: 'src/preload', //默认preload目录，可选，不需要可删除
-    routerMode: 'hash', //路由 hash或memory,仅electron下有效，推荐使用hash
-    outputDir: 'dist_electron', //默认打包目录
-    builderOptions: {
-      "win": {
-        "icon": "./public/logo.ico",
-        "target": [{
-          "target": "nsis", //利用nsis制作安装程序
-          "arch": ["x64"]
-        }]
-      },
-      "mac": {
-        "icon": "./public/logo.ico",
-      },
-      "nsis": {
-        "oneClick": false, // 是否一键安装
-        "allowElevation": false, // 允许请求提升。 如果为false，则用户必须使用提升的权限重新启动安装程序。
-        "allowToChangeInstallationDirectory": true, // 允许修改安装目录
-        "installerIcon": "./public/logo.ico", // 安装图标
-        "uninstallerIcon": "./public/logo.ico", //卸载图标
-        "installerHeaderIcon": "./public/logo.ico", // 安装时头部图标
-        "createDesktopShortcut": true, // 创建桌面图标
-        "createStartMenuShortcut": true, // 创建开始菜单图标
-        "shortcutName": "AppDemo", // 图标名称
-      },
-    }
-  }
+  plugins: ['@umijs/plugins/dist/dva'],
+  dva: {}
 });
