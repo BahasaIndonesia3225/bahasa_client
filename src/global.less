@@ -1,6 +1,26 @@
-#root {
+* {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  text-decoration: none;
+}
+
+html, body {
+  touch-action: manipulation;  //避免 300ms 的点击延迟
+  width: 100vw;
+  height: 100vh;
+}
+
+div#root {
+  height: 100vh;
+}
+
+.gridBox {
+  border: solid 1px #999999;
+  background: var(--adm-color-box);
+  text-align: center;
+  color: #999999;
   height: 100%;
 }
-.ant-design-pro, .ant-layout, .ant-pro-layout-container, .ant-layout-content {
-  height: 100% !important;
-}
+
+
