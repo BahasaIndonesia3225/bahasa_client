@@ -5,7 +5,7 @@ const baseUrl =  "http://study.bahasaindo.cn";
 export default defineConfig({
   title: "东东印尼语",
   npmClient: 'pnpm',
-  outputPath: 'dist',
+  outputPath: 'studypc.bahasaindo.cn',
   history: { type: 'hash' },
   hash: true,  //让 build 之后的产物包含 hash 后缀, 避免浏览器加载缓存
   mock: false, //关闭 Mock 功能
@@ -24,13 +24,13 @@ export default defineConfig({
   routes: [
     { path: "/", component: "home" },
     { path: "/home", component: "home" },
-    // { path: "/login", component: "login", name: "Selamat datang 欢迎" },
-    // { path: "/courseCatalog", component: "courseCatalog", name: "课程分类" },
-    // { path: "/courseList", component: "courseList", name: "课程目录" },
-    // { path: "/confidentiality", component: "confidentiality", name: "保密协议" },
-    // { path: "/courseDetail", component: "courseDetail", name: "课程查看" },
+    { path: "/login", component: "login", name: "Selamat datang 欢迎" },
+    { path: "/courseCatalog", component: "courseCatalog", name: "课程分类" },
+    { path: "/courseList", component: "courseList", name: "课程目录" },
+    { path: "/confidentiality", component: "confidentiality", name: "保密协议" },
+    { path: "/courseDetail", component: "courseDetail", name: "课程查看" },
     // { path: "/setting", component: "setting", name: "设置" },
-    // { path: "/doExercises", component: "doExercises", name: "习题练习" },
+    { path: "/doExercises", component: "doExercises", name: "习题练习" },
     // { path: "/aboutUs", component: "aboutUs", name: "关于我们" },
     // { path: "/peopleNearby", component: "peopleNearby", name: "附近的人" },
   ],
