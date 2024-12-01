@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate, useLocation, connect } from 'umi';
-import { Radio, Button, Empty, Form, Space, Modal, AutoCenter } from 'antd-mobile'
+import { Radio, Button, Empty, Form, Space, Modal, Image, Row, Col, Card } from 'antd';
+import { ExclamationCircleFilled } from '@ant-design/icons';
 import { request } from "@/services";
 import  "./index.less"
+
+const { error, info } = Modal;
 
 const doExercises = (props) => {
   const stateParams = useLocation();
@@ -26,66 +29,55 @@ const doExercises = (props) => {
         const {success, content} = res;
         if(success) {
           setLoading(false);
-
           if(!nextVod) {
             //随堂练习场景
-            Modal.show({
-              content: <AutoCenter>{content ? "恭喜，您已通过本次测验！" : "很遗憾，您未通过本次测试。"}</AutoCenter>,
-              closeOnAction: true,
-              actions: [
-                {
-                  key: 'online',
-                  text: '重新出卷',
-                  primary: true,
-                  onClick: () => {
-                    form.resetFields();
-                    queryExercises();
-                  }
-                },
-                {
-                  key: 'download',
-                  text: '返回',
-                  onClick: () => {
-                    navigate(-1)
-                  }
-                },
-              ]
+            info({
+              title: content ? "恭喜，您已通过本次测验！" : "很遗憾，您未通过本次测试。",
+              content: '请先通过上节课的题目测试',
+              icon: <ExclamationCircleFilled />,
+              okText: '重新出卷',
+              cancelText: '返回',
+              onOk: () => {
+                form.resetFields();
+                queryExercises();
+              },
+              onCancel: () => {
+                navigate(-1)
+              }
             })
           }else {
             //查看下一节课程
-            let txt = content ? "本次测验通过，是否继续观看下一课？" : "很遗憾，您未通过本次测试。为了保证每名同学的学习效果，您的作答需要全对才能解锁下一课。"
-            Modal.show({
-              content: <AutoCenter>{txt}</AutoCenter>,
-              closeOnAction: true,
-              actions: content ? [
-                {
-                  key: 'online',
-                  text: '观看',
-                  primary: true,
-                  onClick: () => {
-                    navigate("/courseDetail", {
-                      replace: false,
-                      state: { id: nextId, title: nextTitle, vod: nextVod }
-                    })
-                  }
+            let txt = content ? "本次测验通过，是否继续观看下一课？" : "很遗憾，您未通过本次测试。为了保证每名同学的学习效果，您的作答需要全对才能解锁下一课。";
+            let config = {
+              content: txt,
+              icon: <ExclamationCircleFilled />,
+            };
+            if(content) {
+              config = {
+                ...config,
+                okText: '观看',
+                onOk: () => {
+                  navigate("/courseDetail", {
+                    replace: false,
+                    state: { id: nextId, title: nextTitle, vod: nextVod }
+                  })
                 },
-              ] : [
-                {
-                  key: 'online',
-                  text: '重新出卷',
-                  primary: true,
-                  onClick: () => {
-                    form.resetFields();
-                    queryExercises();
-                  }
+              }
+            }else {
+              config = {
+                ...config,
+                okText: '重新出卷',
+                cancelText: '回到课程',
+                onOk: () => {
+                  form.resetFields();
+                  queryExercises();
                 },
-                {
-                  key: 'download',
-                  text: '回到课程',
-                  onClick: () => {}
-                },
-              ],
-            })
+                onCancel: () => {
+
+                }
+              }
+            }
+            info(config)
           }
         }
       })
@@ -114,58 +106,84 @@ const doExercises = (props) => {
 
   return (
     <div className="doExercises">
-      <div className="formHeader">
-        <span>{title.split("】")[1]}</span>
+      <Image
+        rootClassName='top_logo'
+        src='./image/login_home.png'
+        preview={false}
+        width={260}
+      />
+      <div className="container">
+        <div className="formHeader">
+          <span>{title.split("】")[1]}</span>
+        </div>
+        {
+          !exercises.length ? <Empty description='暂无数据' style={{padding: '64px 0'}}/> :
+            <Form
+              layout='vertical'
+              form={form}
+              initialValues={initialValues}
+              onFinish={submitExercises}
+            >
+              <Space direction="vertical" size="middle" style={{ display: 'flex' }}>
+                {
+                  exercises.map((item, index) => {
+                    let {id, content, questionOptions} = item;
+                    //临时去重
+                    const ids = [...new Set(questionOptions.map(item => item.id))];
+                    questionOptions = ids.map(id => questionOptions.find(item => item.id === id))
+                    return (
+                      <Card
+                        title={index + 1 + ". " + content + "?"}
+                        bordered={true}
+                        hoverable
+                        style={{ width: '100%', borderRadius: 27 }}
+                        styles={{
+                          body: {
+                            padding: 20,
+                            overflow: 'hidden',
+                          },
+                        }}
+                      >
+                        <Form.Item
+                          className="formItem"
+                          name={id}
+                          key={id}
+                          rules={[{required: true, message: '请选择该题目'}]}>
+                          <Radio.Group className="radioGroup">
+                            <Row gutter={[10, 10]}>
+                              {
+                                questionOptions.map(item_ => (
+                                  <Col className='radioContaon' span={12}>
+                                    <Card>
+                                      <Radio value={item_.id}>
+                                        {item_.content}
+                                      </Radio>
+                                    </Card>
+                                  </Col>
+                                ))
+                              }
+                            </Row>
+                          </Radio.Group>
+                        </Form.Item>
+                      </Card>
+                    )
+                  })
+                }
+                <Form.Item label={null}>
+                  <Button
+                    block
+                    type="primary"
+                    htmlType="submit"
+                    loading={loading}
+                    size='large'>
+                    提交
+                  </Button>
+                </Form.Item>
+              </Space>
+
+            </Form>
+        }
       </div>
-      {
-        !exercises.length ? <Empty description='暂无数据' style={{padding: '64px 0'}}/> :
-          <Form
-            form={form}
-            mode='card'
-            initialValues={initialValues}
-            onFinish={submitExercises}
-            footer={
-              <Button
-                block
-                type='submit'
-                loading={loading}
-                loadingText='提交中'
-                color='primary'
-                size='large'>
-                提交
-              </Button>
-            }
-          >
-            {
-              exercises.map((item, index) => {
-                const {id, content, questionOptions} = item;
-                return (
-                  <>
-                    <Form.Header></Form.Header>
-                    <Form.Item
-                      className="formItem"
-                      name={id}
-                      key={id}
-                      label={index + 1 + ". " + content + "?"}
-                      rules={[{required: true, message: '请选择该题目'}]}>
-                      <Radio.Group>
-                        <Space direction='vertical'>
-                          {
-                            questionOptions.map(item_ => (
-                              <Radio block value={item_.id}>
-                                {item_.content}
-                              </Radio>
-                            ))
-                          }
-                        </Space>
-                      </Radio.Group>
-                    </Form.Item>
-                  </>
-                )
-              })
-            }
-          </Form>
-      }
     </div>
   )
 }

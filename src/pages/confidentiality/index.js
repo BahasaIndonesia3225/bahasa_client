@@ -1,6 +1,6 @@
 import React from 'react'
 import { useNavigate, useLocation } from 'umi';
-import { Image } from 'antd-mobile'
+import { Image, Space } from 'antd'
 import dayjs from 'dayjs'
 import './index.less'
 
@@ -19,8 +19,14 @@ const Confidentiality = (props) => {
 
   return (
     <div className="confidentiality">
+      <Image
+        rootClassName='top_logo'
+        src='./image/login_home.png'
+        preview={false}
+        width={260}
+      />
       <div className="chapterAttention">
-        <p>您是否接受保密协议</p>
+        <p>您是否接受保密协议？</p>
         <p>敬请留意，本课程仅供个人单独使用。如您欲购买用于多人观看学习的课程，请与我们联系以获取企业授权。</p>
         <p>
           <span style={{color: '#ff0000'}}>我们对盗版课程的传播持绝对零容忍态度，</span>
@@ -30,21 +36,34 @@ const Confidentiality = (props) => {
           当您选择购买本课程时，即表明您愿意承担保密工作的责任。
         </p>
         <Image
-          className="chapterDecorate"
-          src="./image/img_decorate.png"/>
-        <Image
-          className='chapterBtn'
-          src="./image/confidentialityAgree.png"
-          alt=""
-          onClick={() => agreeRule()}/>
-        <Image
-          src="./image/confidentialityRefuse.png"
-          alt=""
-          onClick={() => window.location.href = "https://www.gov.cn/guoqing/2021-10/29/content_5647633.htm"}
+          rootClassName="chapterDecorate"
+          preview={false}
+          height={80}
+          src="./image/img_decorate.png"
         />
+        <Space
+          style={{ width: '100%', marginTop: 16 }}
+          direction='vertical'
+          align='center'
+          size={16}>
+          <Image
+            rootClassName='chapterBtn'
+            preview={false}
+            height={80}
+            src="./image/confidentialityAgree.png"
+            onClick={() => agreeRule()}/>
+          <Image
+            preview={false}
+            height={80}
+            src="./image/confidentialityRefuse.png"
+            onClick={() => window.location.href = "https://www.gov.cn/guoqing/2021-10/29/content_5647633.htm"}
+          />
+        </Space>
       </div>
       <Image
-        className="chapterPrison"
+        rootClassName="chapterPrison"
+        preview={false}
+        width={560}
         src="./image/prison.png"/>
     </div>
   )

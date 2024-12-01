@@ -1,32 +1,28 @@
 .chapterCatalog {
-  padding: 16px 16px 12px;
-  .chapterAttention {
-    margin-bottom: 12px;
-    border-radius: 16px;
-    padding: 12px 8px 12px 30px;
-    background: rgba(255, 255, 255, 0.6);
-    color: rgba(10, 7, 8, 0.6);
-    display: flex;
-    justify-content: start;
-    align-items: end;
-    position: relative;
-    ul {
-      flex: 1;
-      margin-right: 10px;
+  min-height: 100vh;
+  overflow: hidden;
+  position: relative;
+  .top_logo {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+  }
+  .chapterCatalogContainer {
+    width: 80%;
+    margin: 0 auto;
+    margin-top: 120px;
+    ul.attention {
+      margin-left: 20px;
       li {
-        list-style-type: disc;
-        line-height: 20px;
+        list-style: square;
       }
     }
-    .chapterAttentionImg {
-      width: 72px;
-      height: 76px;
-    }
-  }
-  .courseCatalogCard {
-    position: relative;
-    li:not(:last-child) {
-      margin-bottom: 12px;
+    .courseCatalogCard {
+      cursor: pointer;
+      border-radius: 18px;
+      .ant-card-body {
+        padding: 0;
+      }
     }
   }
 }

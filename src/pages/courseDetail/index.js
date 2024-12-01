@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useLocation, connect } from 'umi';
-import { Dialog, Image, Modal, AutoCenter, Button } from 'antd-mobile'
-import { EditSOutline } from 'antd-mobile-icons'
+import { Image, Modal, Button, message, Card, Flex, Alert, Col, Row } from 'antd'
+import { ExclamationCircleFilled } from '@ant-design/icons';
 import { request } from '@/services';
 import "./index.less"
 
+const { error, info } = Modal;
+
 const courseDetail = (props) => {
+  const [messageApi, contextHolder] = message.useMessage();
   const stateParams = useLocation();
   const { id, title, vod } = stateParams.state;
   const [currentId, setCurrentId] = useState(id);
@@ -44,9 +47,10 @@ const courseDetail = (props) => {
     if(type === 'next') {
       //查看下一课程
       if(index === courseList.length - 1) {
-        const result = await Dialog.confirm({
+        messageApi.open({
+          type: 'warning',
           content: '当前课程已是最后一个！',
-        })
+        });
         return;
       }else {
         const {id, title, vod} = courseList[index + 1];
@@ -55,33 +59,23 @@ const courseDetail = (props) => {
         newTitle = title;
         newVod = vod;
         if(isPass === 0) {
-          Modal.show({
-            content: <AutoCenter>需要通过本节课测试才能进入下一课，你做好准备了吗？</AutoCenter>,
-            closeOnAction: true,
-            actions: [
-              {
-                key: 'online',
-                text: '做好准备了',
-                primary: true,
-                onClick: () => {
-                  navigate("/doExercises", {
-                    replace: false,
-                    state: {
-                      id: currentId,
-                      title: currentTitle,
-                      vod: currentVod,
-                      nextId: newId,
-                      nextTitle: newTitle,
-                      nextVod: newVod,
-                    }
-                  })
+          error({
+            title: '需要通过本节课测试才能进入下一课，你做好准备了吗？',
+            icon: <ExclamationCircleFilled />,
+            okText: '做好准备了',
+            onOk: () => {
+              navigate("/doExercises", {
+                replace: false,
+                state: {
+                  id: currentId,
+                  title: currentTitle,
+                  vod: currentVod,
+                  nextId: newId,
+                  nextTitle: newTitle,
+                  nextVod: newVod,
                 }
-              },
-              {
-                key: 'online',
-                text: '还没准备好',
-              },
-            ],
+              })
+            },
           })
           return;
         }
@@ -89,9 +83,10 @@ const courseDetail = (props) => {
     }else {
       //查看上一课程
       if(index === 0) {
-        const result = await Dialog.confirm({
+        messageApi.open({
+          type: 'warning',
           content: '当前课程已是第一个！',
-        })
+        });
         return;
       }
       newId = courseList[index - 1].id;
@@ -117,7 +112,7 @@ const courseDetail = (props) => {
             id: "player-con",
             vid: currentVod,
             playauth: content,
-            height: "300px",
+            height: "488px",
             cover: './image/cover.jpg',
             "autoplay": true,
             "isLive": false, //是否为直播播放
@@ -150,51 +145,90 @@ const courseDetail = (props) => {
 
   return (
     <div className="courseDetail">
-      <p className="helloUser">
-        <span>你好呀，{props.waterMarkContent}</span>
-      </p>
-      <div className="chapterAttention">
-        <ul>
-          <li>
-            <span>学习过程中请勿开启录屏软件或第三方下载软件，否则您的帐号可能会受到限制。</span>
-          </li>
-          <li>
-            <span>如果您的网络不佳，视频加载可能需要10-20秒，期间若</span>
-            <span style={{color: '#ff0000'}}>出现转圈、黑屏、有声音没画面等情况，</span>
-            <span> 请耐心等待。如果长时问无法加载，请切换网络重新登陆。</span>
-          </li>
-        </ul>
-        <div className="chapterAttentionImg">
-          <Image src='./image/img_intro.png'/>
-        </div>
-      </div>
-      <p className="courseTitle">
-        <span>{currentTitle}</span>
-      </p>
-      <div className="coursePlayArea">
-        <div id="player-con"/>
-      </div>
-      {
-        questionNumber > 0 && (
-          <Button
-            color='primary'
-            fill='outline'
-            block
-            onClick={doExercises}
-            style={{ marginBottom: 28 }}>
-            <EditSOutline />&nbsp;
-            随堂练习(共{questionNumber}道题目)
-          </Button>
-        )
-      }
-      <div className="courseNextBtn">
-        <Image
-          style={{marginRight: 12}}
-          src='./image/prveCourse.png'
-          onClick={() => switchCourse('prve')}/>
-        <Image
-          src='./image/nextCourse.png'
-          onClick={() => switchCourse('next')}/>
+      {contextHolder}
+      <Image
+        rootClassName='top_logo'
+        src='./image/login_home.png'
+        preview={false}
+        width={260}
+      />
+      <div className="container">
+        <Card
+          title={currentTitle}
+          extra={<a>随堂练习(共{questionNumber}道题目)</a>}
+          bordered={true}
+          hoverable
+          style={{ width: '100%', borderRadius: 27 }}
+          styles={{
+            body: {
+              padding: 20,
+              overflow: 'hidden',
+            },
+          }}
+        >
+          <Flex justify="space-between">
+            <div style={{ width: '650px' }} id="player-con"/>
+            <Flex
+              vertical
+              align="flex-end"
+              justify="space-between"
+              flex="1"
+              style={{
+                paddingLeft: 20,
+              }}
+            >
+              <Alert
+                style={{ border: 0, borderRadius: 27 }}
+                message="温馨提示"
+                description={
+                  <div className="chapterAttention">
+                    <ul>
+                      <li>
+                        <span>学习过程中请勿开启录屏软件或第三方下载软件，否则您的帐号可能会受到限制。</span>
+                      </li>
+                      <li>
+                        <span>如果您的网络不佳，视频加载可能需要10-20秒，期间若</span>
+                        <span style={{color: '#ff0000'}}>出现转圈、黑屏、有声音没画面等情况，</span>
+                        <span> 请耐心等待。如果长时问无法加载，请切换网络重新登陆。</span>
+                      </li>
+                    </ul>
+                    <div className="chapterAttentionImg">
+                      <Image src='./image/img_intro.png' preview={false}/>
+                    </div>
+                  </div>
+                }
+                type="info"
+              />
+              <Row gutter={16}>
+                <Col className="gutter-row" span={8}>
+                  <Image
+                    src='./image/prveCourse.png'
+                    preview={false}
+                    onClick={() => switchCourse('prve')}
+                  />
+                </Col>
+                <Col className="gutter-row" span={8}>
+                  <Image
+                    src='./image/nextCourse.png'
+                    preview={false}
+                    onClick={() => switchCourse('next')}
+                  />
+                </Col>
+                <Col className="gutter-row" span={8}>
+                  {
+                    questionNumber > 0 && (
+                      <Image
+                        src='./image/doExecuse.png'
+                        preview={false}
+                        onClick={doExercises}
+                      />
+                    )
+                  }
+                </Col>
+              </Row>
+            </Flex>
+          </Flex>
+        </Card>
       </div>
     </div>
   )

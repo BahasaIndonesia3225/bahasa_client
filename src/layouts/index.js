@@ -1,7 +1,16 @@
 import React from 'react'
-import { Image, Watermark } from "antd";
+import { Image, Watermark, ConfigProvider } from "antd";
 import { useNavigate, useRouteProps, Outlet, connect } from 'umi';
+import zhCN from 'antd/locale/zh_CN';
 import "./index.less"
+
+const theme= {
+  components: {
+    Alert: {
+      withDescriptionPadding: [10, 12]
+    },
+  },
+}
 
 const Layout = (props) => {
   const routeProps = useRouteProps()
@@ -9,23 +18,13 @@ const Layout = (props) => {
 
   return (
     <div className="layout">
-      <div className="outletContent">
-        <Image className="bgImage" src='./image/img_background.png'/>
-        <Outlet />
-        { (name && !['Selamat datang 欢迎', "附近的人"].includes(name)) ?
-          <WaterMark
-            content={props.waterMarkContent}
-            gap={[12, 24]}
-          /> :
-          <></>
-        }
-      </div>
+      <ConfigProvider  locale={zhCN} theme={theme}>
+        <Outlet/>
+      </ConfigProvider>
     </div>
   );
 }
 
 export default connect((state) => {
-  return {
-    waterMarkContent: state.user.waterMarkContent,
-  }
+  return { waterMarkContent: state.user.waterMarkContent }
 })(Layout)

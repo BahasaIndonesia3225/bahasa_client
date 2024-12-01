@@ -1,27 +1,29 @@
 .home {
   height: 100%;
-  padding: 16px 16px 12px;
-  box-sizing: border-box;
   position: relative;
-  .logoCard {
-    width: 100%;
-    margin-top: 57px;
-    margin-bottom: 20px;
-  }
-  .downLoadBtn {
-    width: 100%;
-    .androidDownload, .iosDownload {
-      width: 150px
-    }
+  .homeContainer {
+    width: 400px;
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 0; bottom: 0;
+    left: 0; right: 0;
+    margin: auto;
+    z-index: 1000;
+    transform: translateY(-60px);
   }
   .bahasaindoLink {
-    width: 112px;
+    width: 125px;
     height: 52px;
     border-radius: 30px 0 0 30px;
     background: #0a65c3;
     display: flex;
     justify-content: start;
     align-items: center;
+    cursor: pointer;
     position: fixed;
     right: 0;
     bottom: 110px;
@@ -54,11 +56,13 @@
         font-weight: bold;
         color: #f14e4c;
         margin-right: 20px;
+        cursor: pointer;
       }
       span:last-child {
         font-size: 12px;
         font-weight: bold;
         color: #000000;
+        cursor: pointer;
       }
     }
     p {
