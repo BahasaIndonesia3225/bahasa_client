@@ -112,7 +112,7 @@ const courseDetail = (props) => {
             id: "player-con",
             vid: currentVod,
             playauth: content,
-            height: "488px",
+            height: "430px",
             cover: './image/cover.jpg',
             "autoplay": true,
             "isLive": false, //是否为直播播放
