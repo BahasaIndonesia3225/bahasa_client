@@ -136,7 +136,7 @@ const doExercises = (props) => {
                         title={index + 1 + ". " + content + "?"}
                         bordered={true}
                         hoverable
-                        style={{ width: '100%', borderRadius: 27 }}
+                        style={{ width: '100%', borderRadius: 8 }}
                         styles={{
                           body: {
                             padding: 20,
@@ -154,11 +154,9 @@ const doExercises = (props) => {
                               {
                                 questionOptions.map(item_ => (
                                   <Col className='radioContaon' span={12}>
-                                    <Card>
-                                      <Radio value={item_.id}>
-                                        {item_.content}
-                                      </Radio>
-                                    </Card>
+                                    <Radio value={item_.id}>
+                                      {item_.content}
+                                    </Radio>
                                   </Col>
                                 ))
                               }

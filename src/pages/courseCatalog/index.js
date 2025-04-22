@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, connect } from 'umi';
-import { Image, Empty, Skeleton, Modal, Col, Row, Card, Alert, Typography, Watermark } from 'antd'
+import { Image, Empty, Skeleton, Modal, Col, Row, Card, Alert, Typography, Watermark, Tag } from 'antd'
 import { ExclamationCircleFilled } from '@ant-design/icons';
 import { request } from '@/services';
 import './index.less';
@@ -53,11 +53,20 @@ const courseCatalog = (props) => {
     });
   }
 
+  const licenseTypeList = [
+    { name: "个人授权", value: 1 },
+    { name: "企业授权", value: 2 },
+    { name: "未知", value: 3 },
+  ]
+  const [licenseTypeName, setLicenseTypeName] = useState("")
   const queryChapters = async (props) => {
     //获取手机号、是否开通进阶课
     const userInfoResponse = await request.get('/business/web/member/getUser');
     const { code, content: userInfo } = userInfoResponse;
-    const { phone, userType } = userInfo;
+    const { phone, userType, licenseType } = userInfo;
+    const licenseTypeItem = licenseTypeList.find(item => item.value === licenseType);
+    const licenseTypeName = licenseTypeItem.name;
+    setLicenseTypeName(licenseTypeName)
     // if(!phone) handleBindPhone();
 
     //获取课程信息
@@ -84,7 +93,16 @@ const courseCatalog = (props) => {
     setLoading(false)
   }
 
+  //获取公告
+  const [remarks, setRemarks] = useState("");
+  const getRemarks = async () => {
+    const remarkResponse = await request.post('/business/web/notice/all');
+    const {content} = remarkResponse;
+    setRemarks(content.remark);
+  }
+
   useEffect(() => {
+    getRemarks();
     queryChapters()
   }, [])
 
@@ -118,7 +136,10 @@ const courseCatalog = (props) => {
           width={260}
         />
         <div className="chapterCatalogContainer">
-          <Title level={3}>你好呀，{props.waterMarkContent}！</Title>
+          <Title level={3}>
+            你好呀，{props.waterMarkContent}！
+            <Tag>授权类型：{licenseTypeName}</Tag>
+          </Title>
           <Alert
             showIcon
             type="info"
@@ -137,6 +158,12 @@ const courseCatalog = (props) => {
               </ul>
             }
             style={{ marginBottom: '16px', border: 0, background: 'rgba(255, 255, 255, 0.5)' }}
+          />
+          <Alert
+            style={{ marginBottom: '16px' }}
+            description={remarks}
+            type="info"
+            showIcon
           />
           {
             loading ? (
