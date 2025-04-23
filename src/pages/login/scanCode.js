@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from 'react'
 import { useNavigate, connect } from 'umi';
 import { Form, Input, Button, Checkbox, Space, Radio, Image, Table, Modal, Alert, QRCode, Empty } from 'antd';
 import { ExclamationCircleFilled } from '@ant-design/icons';
-import {setCookie, getCookie, clearCookie} from '@/utils/rememberPassword';
 import { request } from '@/services';
 import './index.less';
 
@@ -15,6 +14,9 @@ export default (props) => {
     const { content } = await request.get('/business/web/member/getCode');
     setQrCode(content);
   }
+
+  const latestQrCode = useRef(qrCode);
+  useEffect(() => { latestQrCode.current = qrCode }, [qrCode]);
 
   //查询二维码是否生成token
   const [status, setStatus] = useState('active');
@@ -33,16 +35,13 @@ export default (props) => {
 
   useEffect(() => {
     getQrCode()
-    // const t1 = setInterval(getQrCode, 1000 * 60 * 2);
-    // const t2 = setInterval(getTokenByQrCode, 1000 * 2)
-    // return () => {
-    //   clearInterval(t1);
-    //   clearInterval(t2);
-    // };
+    const t1 = setInterval(getQrCode, 1000 * 60 * 2);   //每2分钟刷新二维码
+    const t2 = setInterval(getTokenByQrCode, 1000 * 2)  //每2秒，查询二维码状态
+    return () => {
+      clearInterval(t1);
+      clearInterval(t2);
+    };
   }, [])
-
-  const latestQrCode = useRef(qrCode);
-  useEffect(() => { latestQrCode.current = qrCode }, [qrCode]);
 
   return (
     <Space direction='vertical' align='center' size={10} style={{ width: '100%' }}>
@@ -52,11 +51,9 @@ export default (props) => {
         closable={false}
       />
       <div className='qrCodeBox'>
-        <span
-          style={{ opacity: checkedList.length < 2 ? 1 : 0 }}
-          className='attention'>
-          请选阅读并同意《课程保密协议》
-        </span>
+        <div className='attentionTxt' style={{ opacity: checkedList.length < 2 ? 1 : 0 }}>
+          <span>请阅读并同意《课程保密协议》</span>
+        </div>
         <QRCode
           rootClassName='qrCode'
           style={{filter: checkedList.length < 2 ? 'blur(10px)' : 'unset'}}

@@ -36,7 +36,7 @@ const columns = [
 ];
 
 const Login = (props) => {
-  const [loginMode, setLoginMode] = useState('1');     //登录模式，1账号密码登录，2二维码登录
+  const [loginMode, setLoginMode] = useState('2');     //登录模式，1账号密码登录，2二维码登录
   const [checkedList, setCheckedList] = useState([]);  //是否同意登录准则
 
   //登陆成功提示模态框

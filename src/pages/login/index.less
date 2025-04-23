@@ -67,17 +67,22 @@
         height: 260px;
         margin-bottom: 10px;
         position: relative;
-        .attention {
-          width: 100%;
+        .attentionTxt {
+          width: 75%;
           height: 24px;
+          line-height: 24px;
+          text-align: center;
+          border-radius: 4px;
+          background: rgba(0, 0, 0, .35);
           position: absolute;
           top: 0; bottom: 0;
           left: 0; right: 0;
           margin: auto;
-          color: #1677ff;
-          font-size: 12px;
-          text-align: center;
-          transition: filter .3s linear;
+          z-index: 10;
+          span {
+            color: #ffffff;
+            font-size: 12px;
+          }
         }
         .qrCode {
           transition: filter .3s linear;
