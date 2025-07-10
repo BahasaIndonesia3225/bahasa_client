@@ -38,7 +38,7 @@ const Confidentiality = (props) => {
         <Image
           rootClassName="chapterDecorate"
           preview={false}
-          height={80}
+          width={80}
           src="./image/img_decorate.png"
         />
         <Space
@@ -49,12 +49,12 @@ const Confidentiality = (props) => {
           <Image
             rootClassName='chapterBtn'
             preview={false}
-            height={80}
+            width={340}
             src="./image/confidentialityAgree.png"
             onClick={() => agreeRule()}/>
           <Image
             preview={false}
-            height={80}
+            width={340}
             src="./image/confidentialityRefuse.png"
             onClick={() => window.location.href = "https://www.gov.cn/guoqing/2021-10/29/content_5647633.htm"}
           />

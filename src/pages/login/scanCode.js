@@ -46,13 +46,14 @@ export default (props) => {
   return (
     <Space direction='vertical' align='center' size={10} style={{ width: '100%' }}>
       <Alert
-        description="请同意下方条款，才能使用二维码登录。"
+        description={<div style={{ color: 'red' }}>点击右上角小电脑图标可使用用户名和密码登陆</div>}
         type="info"
+        showIcon
         closable={false}
       />
       <div className='qrCodeBox'>
         <div className='attentionTxt' style={{ opacity: checkedList.length < 2 ? 1 : 0 }}>
-          <span>请阅读并同意《课程保密协议》</span>
+          <span>请使用东东印尼语App扫码，如果您的东东印尼语App没有扫码登录功能，请联系老师，我们将会尽快帮您处理。</span>
         </div>
         <QRCode
           rootClassName='qrCode'

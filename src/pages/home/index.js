@@ -18,18 +18,18 @@ export default () => {
           src='./image/login_home.png'
           preview={false}
           width={300}
-          style={{ marginBottom: 40 }}
+          style={{marginBottom: 40}}
         />
         <Space direction='vertical' align='center' size={10}>
           <Image
             src='./image/loginBtn.png'
             preview={false}
-            height={60}
-            onClick={() => navigate("/login", { replace: false })}
+            width={340}
+            onClick={() => navigate("/login", {replace: false})}
           />
           <Image
             src='./image/loginProtocol.png'
-            height={60}
+            width={340}
             preview={false}
             onClick={() => window.open("https://taioassets.oss-cn-beijing.aliyuncs.com/Pdfs/%E4%B8%9C%E4%B8%9C%E5%8D%B0%E5%B0%BC%E8%AF%AD%E7%94%A8%E6%88%B7%E4%BD%BF%E7%94%A8%E6%9C%8D%E5%8A%A1%E5%8D%8F%E8%AE%AE.pdf", "_blank")}
           />
@@ -45,6 +45,30 @@ export default () => {
           />
         </div>
         <span>单词卡</span>
+      </div>
+      <div
+        className="bahasaindoLink ptdchatbot"
+        onClick={() => window.open("http://ptdchatbot.cn", "_blank", 'width=375,height=667')}>
+        <div className="icon">
+          <Image
+            style={{ borderRadius: 20 }}
+            src="./image/icon_card2.png"
+            preview={false}
+          />
+        </div>
+        <span>小曼同学</span>
+      </div>
+      <div
+        className="bahasaindoLink ptdpintar"
+        onClick={() => window.open("http://ptdpintar.cn", "_blank", 'width=375,height=667')}>
+        <div className="icon">
+          <Image
+            style={{ borderRadius: 20 }}
+            src="./image/icon_card1.png"
+            preview={false}
+          />
+        </div>
+        <span>东仔</span>
       </div>
       <div className="bahasaindoFooter">
         <div className="friendLink">

@@ -41,7 +41,7 @@ const Login = (props) => {
 
   //登陆成功提示模态框
   let navigate = useNavigate();
-  const handleInputSuccess = ({ token, name }) => {
+  const handleInputSuccess = async ({ token, name }) => {
     props.dispatch({
       type: "user/changeToken",
       payload: token
@@ -50,7 +50,18 @@ const Login = (props) => {
       type: "user/changeWaterMarkContent",
       payload: name
     })
-    navigate("/courseCatalog", { replace: true });
+    //判断是否开通网页登录权限(1无限制/2只能扫码登录PC/3无法登录)
+    const userInfoResponse = await request.get('/business/web/member/getUser');
+    const {content: userInfo} = userInfoResponse;
+    const {loginType} = userInfo;
+    if(loginType === 1) {
+      navigate("/courseCatalog", { replace: true });
+    }else if(loginType === 2) {
+      if(loginMode === '1') Modal.error({ content: '根据国内有关法律要求，请使用东东印尼语App扫码登录，如果您的东东印尼语App没有扫码登录功能，请联系老师，我们将会尽快帮您处理。（老师在线时间早上9:00-晚上7:00）。' });
+      if(loginMode === '2') navigate("/courseCatalog", { replace: true });
+    }else if(loginType === 3) {
+      Modal.error({ content: '请使用东东印尼语App观看。如有疑问，请联系老师，我们将会尽快帮您处理。（老师在线时间早上9:00-晚上7:00）。' });
+    }
   }
 
   //登陆失败提示模态框（账户密码错误）
