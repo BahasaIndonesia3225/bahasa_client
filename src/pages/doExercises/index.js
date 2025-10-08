@@ -33,7 +33,7 @@ const doExercises = (props) => {
             //随堂练习场景
             info({
               title: content ? "恭喜，您已通过本次测验！" : "很遗憾，您未通过本次测试。",
-              content: '请先通过上节课的题目测试',
+              content: '',
               icon: <ExclamationCircleFilled />,
               okText: '重新出卷',
               cancelText: '返回',

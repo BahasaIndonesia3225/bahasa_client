@@ -1,11 +1,11 @@
 import { defineConfig } from "umi";
-const baseUrl =  "http://study.bahasaindo.cn";
+const baseUrl =  "http://studypc.bahasaindo.net";
 
 //配置文件，包含 Umi 所有非运行时配置
 export default defineConfig({
   title: "东东印尼语",
   npmClient: 'pnpm',
-  outputPath: 'studypc.bahasaindo.cn',
+  outputPath: 'studypc.bahasaindo.com',
   history: { type: 'hash' },
   hash: true,  //让 build 之后的产物包含 hash 后缀, 避免浏览器加载缓存
   mock: false, //关闭 Mock 功能
@@ -46,6 +46,6 @@ export default defineConfig({
     'https://g.alicdn.com/apsara-media-box/imp-web-player/2.16.3/aliplayer-h5-min.js',
     { src: '/lib/aliplayercomponents-1.0.9.min.js' },
   ],
-  plugins: ['@umijs/plugins/dist/dva'],
+  plugins: ['@umijs/plugins/dist/dva', "umi-plugin-electron-builder"],
   dva: {}
 });

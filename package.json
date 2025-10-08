@@ -6,7 +6,14 @@
     "build": "umi build",
     "postinstall": "umi setup",
     "setup": "umi setup",
-    "start": "npm run dev"
+    "start": "npm run dev",
+    "rebuild-deps": "electron-builder install-app-deps",
+    "electron:init": "umi electron init",
+    "electron:dev": "umi dev electron",
+    "electron:dir": "umi build electron --dir",
+    "electron:build:win": "umi build electron --win",
+    "electron:build:mac": "umi build electron --mac",
+    "electron:build:linux": "umi build electron --linux"
   },
   "dependencies": {
     "@amap/amap-jsapi-loader": "^1.0.1",
@@ -17,10 +24,16 @@
     "umi": "^4.0.79"
   },
   "devDependencies": {
+    "@types/node": "^22.7.7",
     "@types/react": "^18.2.21",
     "@types/react-dom": "^18.2.7",
     "@umijs/plugins": "^4.0.81",
+    "electron": "^38.2.1",
+    "electron-builder": "^26.0.12",
     "typescript": "^5.2.2",
+    "umi-plugin-electron-builder": "^4.0.8",
     "umi-request": "^1.4.0"
-  }
+  },
+  "name": "dongLearnClient",
+  "version": "0.0.1"
 }
