@@ -19,15 +19,20 @@ protocol.registerSchemesAsPrivileged([
 
 function createWindow() {
   mainWindow = new BrowserWindow({
-    width: 800,
-    height: 600,
+    width: 960,
+    height: 720,
     webPreferences: {
       contextIsolation: true,
       preload: path.join(__dirname, 'preload.js'),
     },
   });
+
+  //隐藏窗口的菜单
+  mainWindow.setMenu(null);
+
   if (isDevelopment) {
     mainWindow.loadURL('http://localhost:8888');
+    mainWindow.webContents.openDevTools();
   } else {
     createProtocol('app');
     mainWindow.loadURL('app://./index.html');

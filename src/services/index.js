@@ -2,7 +2,8 @@ import { Modal } from 'antd'
 import { extend } from "umi-request";
 
 export const request = extend({
-  prefix: 'prod-api',
+  // prefix: 'prod-api',
+  prefix: 'http://studypc.bahasaindo.net/prod-api',
   timeout: 10000,
   errorHandler: function (error) {
     window.location.href = "/#/login";
