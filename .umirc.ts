@@ -1,11 +1,16 @@
 import { defineConfig } from "umi";
+
+const { serverConfig } = require('./server.config');
+const config = serverConfig[process.env.APP_ENV || 'Hongkong'];
+const { outputPath } = config;
+
 const baseUrl =  "http://studypc.bahasaindo.net";
 
 //配置文件，包含 Umi 所有非运行时配置
 export default defineConfig({
   title: "东东印尼语",
-  npmClient: 'pnpm',
-  outputPath: 'studypc.bahasaindo.com',
+  npmClient: 'yarn',
+  outputPath,
   history: { type: 'hash' },
   hash: true,  //让 build 之后的产物包含 hash 后缀, 避免浏览器加载缓存
   mock: false, //关闭 Mock 功能
