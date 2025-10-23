@@ -97,7 +97,7 @@ export default defineConfig({
       },
       dmg: {
         //mac安装程序配置
-        background: 'public/image/client_icon.png',
+        // background: 'public/image/client_icon.png',
         backgroundColor: '#cccccc',
         contents: [
           {

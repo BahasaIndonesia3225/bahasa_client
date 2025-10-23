@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { useNavigate, connect } from 'umi';
-import { Form, Input, Button, Checkbox, Space, Radio, Image, Table, Modal, Alert, QRCode, Empty } from 'antd';
-import { ExclamationCircleFilled } from '@ant-design/icons';
+import { Checkbox, Space, Image, Table, Modal, Alert, Breadcrumb } from 'antd';
+import { ExclamationCircleFilled, HomeOutlined } from '@ant-design/icons';
 import { request } from '@/services';
 import ScanCode from './scanCode.js';
 import EnterAccount from './enterAccount.js';
@@ -120,71 +120,83 @@ const Login = (props) => {
         preview={false}
         width={260}
       />
+      <Breadcrumb
+        style={{ position: 'absolute', left: 30, top: 80 }}
+        routes={[
+          { path: '/home', breadcrumbName:
+            <>
+              <HomeOutlined style={{ fontSize: '20px' }}/>
+              <span style={{ fontSize: '20px' }}>回到主页</span>
+            </> }
+        ]}
+      />
       <div className="loginContain">
-        <Image
-          preview={false}
-          width={400}
-          src='./image/img_login.png'
-        />
-        <div className="loginBox">
-          {
-            loginMode === '1' ? (
-              <Image
-                rootClassName='tabMode'
-                preview={false}
-                width={64}
-                height={64}
-                src='./image/qrcode.png'
-                onClick={() => setLoginMode('2')}
+        <div className="loginContainInner">
+          <Image
+            preview={false}
+            width={400}
+            src='./image/img_login.png'
+          />
+          <div className="loginBox">
+            {
+              loginMode === '1' ? (
+                <Image
+                  rootClassName='tabMode'
+                  preview={false}
+                  width={64}
+                  height={64}
+                  src='./image/qrcode.png'
+                  onClick={() => setLoginMode('2')}
+                />
+              ) : (
+                <Image
+                  rootClassName='tabMode'
+                  preview={false}
+                  width={64}
+                  height={64}
+                  src='./image/accountcode.png'
+                  onClick={() => setLoginMode('1')}
+                />
+              )
+            }
+            <p className="loginHeader">
+              <span>登录</span>
+              <span>/ Masuk / Entrar / </span>
+              <span><i>Login</i></span>
+            </p>
+            {
+              loginMode === '1' ?
+                <EnterAccount
+                  checkedList={checkedList}
+                  handleInputSuccess={handleInputSuccess}
+                  handleDeviceError={handleDeviceError}
+                  handleInputError={handleInputError}
+                /> :
+                <ScanCode
+                  checkedList={checkedList}
+                  handleInputSuccess={handleInputSuccess}
+                  handleDeviceError={handleDeviceError}
+                  handleInputError={handleInputError}
+                />
+            }
+            <Space direction='vertical'>
+              <Checkbox.Group
+                value={checkedList}
+                onChange={val => setCheckedList(val)}>
+                <Space direction='vertical'>
+                  <Checkbox value='one'>我是本帐号持有人</Checkbox>
+                  <Checkbox value='two'>我同意并遵守《课程保密协议》</Checkbox>
+                </Space>
+              </Checkbox.Group>
+              <Alert
+                style={{ border: 0 }}
+                description="请您注意，课程仅供您个人使用。若您将账号共享至他人使用，您的账号会在无警告的前提下永久禁用。"
+                type="warning"
+                showIcon
+                closable={false}
               />
-            ) : (
-              <Image
-                rootClassName='tabMode'
-                preview={false}
-                width={64}
-                height={64}
-                src='./image/accountcode.png'
-                onClick={() => setLoginMode('1')}
-              />
-            )
-          }
-          <p className="loginHeader">
-            <span>登录</span>
-            <span>/ Masuk / Entrar / </span>
-            <span><i>Login</i></span>
-          </p>
-          {
-            loginMode === '1' ?
-              <EnterAccount
-                checkedList={checkedList}
-                handleInputSuccess={handleInputSuccess}
-                handleDeviceError={handleDeviceError}
-                handleInputError={handleInputError}
-              /> :
-              <ScanCode
-                checkedList={checkedList}
-                handleInputSuccess={handleInputSuccess}
-                handleDeviceError={handleDeviceError}
-                handleInputError={handleInputError}
-              />
-          }
-          <Space direction='vertical'>
-            <Checkbox.Group
-              value={checkedList}
-              onChange={val => setCheckedList(val)}>
-              <Space direction='vertical'>
-                <Checkbox value='one'>我是本帐号持有人</Checkbox>
-                <Checkbox value='two'>我同意并遵守《课程保密协议》</Checkbox>
-              </Space>
-            </Checkbox.Group>
-            <Alert
-              style={{ border: 0 }}
-              description="请您注意，课程仅供您个人使用。若您将账号共享至他人使用，您的账号会在无警告的前提下永久禁用。"
-              type="warning"
-              showIcon
-              closable={false}
-            />
-          </Space>
+            </Space>
+          </div>
         </div>
       </div>
     </div>

@@ -9,83 +9,85 @@
   .loginContain {
     width: 80%;
     position: absolute;
-    top: 0; bottom: 0;
+    top: 100px;
     left: 0; right: 0;
     margin: auto;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    .loginBox {
-      width: 400px;
-      border-radius: 27px;
-      background: #ffffff;
-      box-shadow: 0px 0px 1px rgba(0, 0, 0, .12);
-      padding: 20px;
-      position: relative;
-      .tabMode {
-        cursor: pointer;
-        position: absolute;
-        top: 10px;
-        right: 10px;
-      }
-      .loginHeader {
-        margin-bottom: 32px;
-        span:first-child {
-          font-size: 26px;
-          font-weight: bold;
-          margin-right: 15px;
-        }
-        span:nth-child(2) {
-          font-size: 14px;
-          font-weight: bold;
-          opacity: 0.6;
-        }
-        span:last-child {
-          font-size: 14px;
-          font-weight: bold;
-          opacity: 0.6;
-        }
-      }
-      .loginBtn {
-        height: 82px;
-        border-radius: 12px;
-        border-width: 0;
-        background: #F45856;
-        cursor: pointer;
-        .loginBtnCon {
-          width: 100%;
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          span {
-            font-size: 28px;
-          }
-        }
-      }
-      .qrCodeBox {
-        width: 260px;
-        height: 260px;
-        margin-bottom: 10px;
+    .loginContainInner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      .loginBox {
+        width: 400px;
+        border-radius: 27px;
+        background: #ffffff;
+        box-shadow: 0px 0px 1px rgba(0, 0, 0, .12);
+        padding: 20px;
         position: relative;
-        .attentionTxt {
-          width: 80%;
-          height: 60px;
-          line-height: 18px;
-          text-align: center;
-          border-radius: 4px;
-          background: rgba(0, 0, 0, .35);
+        .tabMode {
+          cursor: pointer;
           position: absolute;
-          top: 0; bottom: 0;
-          left: 0; right: 0;
-          margin: auto;
-          z-index: 10;
-          span {
-            color: #ffffff;
-            font-size: 12px;
+          top: 10px;
+          right: 10px;
+        }
+        .loginHeader {
+          margin-bottom: 32px;
+          span:first-child {
+            font-size: 26px;
+            font-weight: bold;
+            margin-right: 15px;
+          }
+          span:nth-child(2) {
+            font-size: 14px;
+            font-weight: bold;
+            opacity: 0.6;
+          }
+          span:last-child {
+            font-size: 14px;
+            font-weight: bold;
+            opacity: 0.6;
           }
         }
-        .qrCode {
-          transition: filter .3s linear;
+        .loginBtn {
+          height: 82px;
+          border-radius: 12px;
+          border-width: 0;
+          background: #F45856;
+          cursor: pointer;
+          .loginBtnCon {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            span {
+              font-size: 28px;
+            }
+          }
+        }
+        .qrCodeBox {
+          width: 260px;
+          height: 260px;
+          margin-bottom: 10px;
+          position: relative;
+          .attentionTxt {
+            width: 80%;
+            height: 60px;
+            line-height: 18px;
+            text-align: center;
+            border-radius: 4px;
+            background: rgba(0, 0, 0, .35);
+            position: absolute;
+            top: 0; bottom: 0;
+            left: 0; right: 0;
+            margin: auto;
+            z-index: 10;
+            span {
+              color: #ffffff;
+              font-size: 12px;
+            }
+          }
+          .qrCode {
+            transition: filter .3s linear;
+          }
         }
       }
     }

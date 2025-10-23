@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, connect } from 'umi';
-import { Image, Empty, Skeleton, Modal, Col, Row, Card, Alert, Typography, Watermark, Tag } from 'antd'
-import { ExclamationCircleFilled } from '@ant-design/icons';
+import { Image, Empty, Skeleton, Modal, Col, Row, Card, Alert, Typography, Watermark, Tag, Breadcrumb } from 'antd'
+import { ExclamationCircleFilled, HomeOutlined } from '@ant-design/icons';
 import { request } from '@/services';
 import './index.less';
 
@@ -134,6 +134,16 @@ const courseCatalog = (props) => {
           src='./image/login_home.png'
           preview={false}
           width={260}
+        />
+        <Breadcrumb
+          style={{ position: 'absolute', left: 30, top: 80 }}
+          routes={[
+            { path: '/home', breadcrumbName:
+                <>
+                  <HomeOutlined style={{ fontSize: '20px' }}/>
+                  <span style={{ fontSize: '20px' }}>回到主页</span>
+                </> }
+          ]}
         />
         <div className="chapterCatalogContainer">
           <Title level={3}>

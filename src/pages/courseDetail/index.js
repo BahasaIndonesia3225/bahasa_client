@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useLocation, connect } from 'umi';
-import { Image, Modal, Button, message, Card, Flex, Alert, Col, Row } from 'antd'
-import { ExclamationCircleFilled } from '@ant-design/icons';
+import { Image, Modal, Button, message, Card, Flex, Alert, Col, Row, Breadcrumb } from 'antd'
+import { ExclamationCircleFilled, HomeOutlined } from '@ant-design/icons';
 import { request } from '@/services';
 import "./index.less"
 
@@ -151,6 +151,16 @@ const courseDetail = (props) => {
         src='./image/login_home.png'
         preview={false}
         width={260}
+      />
+      <Breadcrumb
+        style={{ position: 'absolute', left: 30, top: 80 }}
+        routes={[
+          { path: '/courseCatalog', breadcrumbName:
+              <>
+                <HomeOutlined style={{ fontSize: '20px' }}/>
+                <span style={{ fontSize: '20px' }}>回到课程分类</span>
+              </> }
+        ]}
       />
       <div className="container">
         <Card

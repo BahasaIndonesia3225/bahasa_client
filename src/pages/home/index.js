@@ -1,5 +1,6 @@
-import React from 'react'
-import { Space, Image } from 'antd'
+import React, { useState } from 'react'
+import { Space, Image,  Button, Modal } from 'antd';
+import { DownloadOutlined } from '@ant-design/icons';
 import { useNavigate } from 'umi';
 import './index.less';
 
@@ -11,8 +12,32 @@ export default () => {
     window.open(link, "_blank")
   }
 
+  const [open, setOpen] = useState(true);
+  const handleOk = e => { setOpen(false); };
+  const handleCancel = e => { setOpen(false); };
+
   return (
     <div className="home">
+      {/*<Modal*/}
+      {/*  title="PC网站即将下架"*/}
+      {/*  closable={false}*/}
+      {/*  keyboard={false}*/}
+      {/*  maskClosable={false}*/}
+      {/*  open={open}*/}
+      {/*  onOk={handleOk}*/}
+      {/*  onCancel={handleCancel}*/}
+      {/*  okButtonProps={{ disabled: true }}*/}
+      {/*  cancelButtonProps={{ disabled: true }}*/}
+      {/*>*/}
+      {/*  <p>*/}
+      {/*    <span>windows版本下载地址</span>*/}
+      {/*    <DownloadOutlined />*/}
+      {/*  </p>*/}
+      {/*  <p>*/}
+      {/*    <span>Mac版本下载地址</span>*/}
+      {/*    <DownloadOutlined />*/}
+      {/*  </p>*/}
+      {/*</Modal>*/}
       <div className="homeContainer">
         <Image
           src='./image/login_home.png'
